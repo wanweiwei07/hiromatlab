@@ -26,6 +26,7 @@ depthImage(~maskDepth) = 0;
 xyzPoints = depthToPointCloud(depthImage,depthDevice);
 pcshow(xyzPoints,'VerticalAxis','Z','VerticalAxisDir','Up')
 
+
 originalX = xyzPoints(:,:,1);
 originalY = xyzPoints(:,:,2);
 originalZ = xyzPoints(:,:,3);
