@@ -61,7 +61,7 @@ initial_placement = 5;
 toolp = [0.35;-0.35;-0.05];
 toolR = rodrigues([0;0;1], -pi*3/4);
 toolstate = placementstool{initial_placement};
-toolstate_init = moveinterstate(toolstate, obj2p, obj2R);
+toolstate_init = moveinterstate(toolstate, toolp, toolR);
 % motion primitive -- retraction motion
 toolstate_inits_ikprggrp = spawnrgtikppgrp(hironx, toolstate_init);
 toolstate_inits_ikupdown = spawnrgtikupdown(hironx, toolstate_init);
