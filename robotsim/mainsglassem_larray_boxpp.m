@@ -62,7 +62,7 @@ obj1state_inits_ikupdown = spawnrgtikupdown(hironx, obj1state_init);
 % original object 2
 cprintf('r', 'second object\n');
 obj2placement = 5;
-obj2p = [0.45;-0.3;-0.05];
+obj2p = [0.3;-0.3;-0.05];
 obj2R = eye(3,3);
 obj2state = placementsl{obj2placement};
 obj2state_init = moveinterstate(obj2state, obj2p, obj2R);
@@ -74,7 +74,7 @@ obj2state_inits_ikupdown = spawnrgtikupdown(hironx, obj2state_init);
 % original object 3
 cprintf('r', 'third object\n');
 obj3placement = 1;
-obj3p = [0.45;-0.4;-0.05];
+obj3p = [0.4;-0.4;-0.05];
 obj3R = eye(3,3);
 obj3state = placementsl{obj3placement};
 obj3state_init = moveinterstate(obj3state, obj3p, obj3R);
@@ -123,7 +123,7 @@ objboxstate_assem = moveinterstaterel(assemsgl_larray_box.obstaclestate, obj1p, 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% placements %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % placements
-interp = [0.4;-0.1;-0.05];
+interp = [0.4;0.1;-0.05];
 interR = eye(3,3);
 nintermediatestates = size(placementsl, 1);
 intermediatestates_ikppgrp = cell(nintermediatestates, 1);
@@ -160,7 +160,7 @@ for i = 1:nkeyposes
     plotkeypose(hironx, keyposes{i}, cmap(mod(i, 63),:));
     plotactiveobj(obj2state_init,[0.3,0.5,0.3]);
     plotactiveobj(obj3state_init,[0.3,0.5,0.3]);
-    plotactiveobj(objboxstate_assem,[0.3,0.5,0.3]);
+    plotactiveobj(objboxstate_assem,[0.5,0.5,0.5]);
     view(70,25)
 %    plotinterstates(objboxstate_assem);
 %    plot3(tablepcd(:,1), tablepcd(:,2), tablepcd(:,3), '.c');
@@ -204,7 +204,7 @@ for i = 1:nkeyposes
     plotkeypose(hironx, keyposes{i}, cmap(mod(i, 63),:));
     plotactiveobj(obj1state_assem,[0.3,0.5,0.3]);
     plotactiveobj(obj3state_init,[0.3,0.5,0.3]);
-    plotactiveobj(objboxstate_assem,[0.3,0.5,0.3]);
+    plotactiveobj(objboxstate_assem,[0.5,0.5,0.5]);
     view(70,25)    
     drawnow;
     saveas(fhdl, ['results/rearrangement/obj_2_', num2str(i), '.png']);
@@ -245,7 +245,7 @@ for i = 1:nkeyposes
     plotkeypose(hironx, keyposes{i}, cmap(mod(i, 63),:));
     plotactiveobj(obj1state_assem,[0.3,0.5,0.3]);
     plotactiveobj(obj2state_assem,[0.3,0.5,0.3]);
-    plotactiveobj(objboxstate_assem,[0.3,0.5,0.3]);   
+    plotactiveobj(objboxstate_assem,[0.5,0.5,0.5]);
     view(70,25)    
     drawnow;
     saveas(fhdl, ['results/rearrangement/obj_3_', num2str(i), '.png']);
