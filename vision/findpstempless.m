@@ -38,7 +38,7 @@ function [placementdetected, pos, rot] = findpstempless(xyzpoints, placements, i
         pltemplate{i}.pcd = cvtpcd(placements{i}.stablemesh.verts, ...
             placements{i}.stablemesh.faces, 100000);
         pltemplate{i}.pcd = pltemplate{i}.pcd(...
-            pltemplate{i}.pcd(:,3) > 0.01,:);
+            pltemplate{i}.pcd(:,3) > 0.02,:);
         if controlplot
             subplot(2,npltemp/2, i);
             plot3(pltemplate{i}.pcd(:,1), pltemplate{i}.pcd(:,2), pltemplate{i}.pcd(:,3), '.r');
@@ -56,7 +56,7 @@ function [placementdetected, pos, rot] = findpstempless(xyzpoints, placements, i
         end
     end
 
-    clusteredpcid = clusterdata(xyzpoints, 'criterion', 'distance', 'cutoff', 0.01);
+    clusteredpcid = clusterdata(xyzpoints, 'criterion', 'distance', 'cutoff', 0.015);
     ncluster = max(max(clusteredpcid));
     clusters = cell(ncluster, 1);
     
@@ -82,7 +82,8 @@ function [placementdetected, pos, rot] = findpstempless(xyzpoints, placements, i
         observedPC = pointCloud(clusters{i});
         for j = 1:ntemp
             templatePC = pointCloud(pltemplate{j}.pcd);
-            [tformtmp, movingRegtmp, rmsetmp] = pcregrigid(templatePC, observedPC);
+            [tformtmp, movingRegtmp, rmsetmp] = pcregrigid(templatePC, observedPC, 'MaxIterations', 200, 'Tolerance', [0.001, 0.0001]);
+%            [tformtmp, movingRegtmp, rmsetmp] = pcregrigid(templatePC, observedPC);
             tform{j, i} = tformtmp;
             movingReg{j, i} = movingRegtmp.Location;
             rmse(j, i) = rmsetmp;
