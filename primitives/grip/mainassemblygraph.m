@@ -55,7 +55,6 @@ for i = 1:norder
 end
 %}
 
-
 % first filter, check if the assembled structure is stable
 figure(20000);
 otlpcd = tablepcd;
@@ -82,10 +81,10 @@ for i = 1:norder
     end
     drawnow;
 end
-for iassemobj = 3:nobjects
+for iassemobj = 2:nobjects
     figure(20000+iassemobj);
     disp([num2str(iassemobj), '/', num2str(nobjects)]);
-    for i = 4:norder
+    for i = 1:norder
         if(isstablelist(i, iassemobj-1))
             disp([num2str(i), '/', num2str(norder)]);
             subplot(3, norder/3+1, i);
@@ -133,12 +132,13 @@ for iassemobj = 3:nobjects
         drawnow;
     end
 end
+save data/assemthreeblocks/creditsfromsquality.mat creditsfromsquality;
 
 
-%{
 % second filter, check if the assembled structure has good graspability
 figure;
 creditsfromgraspability = zeros(size(assemorder));
+assemsgl_statescell = cell(size(assemorder));
 isgraspablelist = ones(norder, nobjects);
 % compute the credits for the first object
 figure;
@@ -148,6 +148,7 @@ for i = 1:norder
     objid = assemorder(i, 1);
     interstate = interstates(objid);
     interstateupdated = removecdgmeta(interstate, otlpcd);
+    assemsgl_statescell{i, 1} = interstateupdated;
     creditsfromgraspability(i, 1) = size(interstateupdated.graspparamids, 1);
     isgraspablelist(i, 1) = creditsfromgraspability(i, 1) > 0;
     plotinterstates(interstateupdated, intercolors(objid,:), intercolors(objid,:), 'k');
@@ -181,6 +182,7 @@ for iassemobj = 2:nobjects
             objotlpcd = cat(1, objotlpcd, otlpcd);
             interstate2 = removecdgmeta(interstate2, objotlpcd);
             creditsfromgraspability(i, iassemobj) = size(interstate2.graspparamids, 1);
+            assemsgl_statescell{i, iassemobj} = interstate2;
             isgraspablelist(i, iassemobj) = creditsfromgraspability(i, iassemobj) > 0;
             for j = 1:size(objs1id, 1)
                 obj1id = objs1id(j);
@@ -192,11 +194,12 @@ for iassemobj = 2:nobjects
         end
     end
 end
-%}
+save data/assemthreeblocks/creditsfromgraspability.mat creditsfromgraspability;
+save data/assemthreeblocks/assemsgl_statescell.mat assemsgl_statescell;
 
-%{
 % third filter, check if the assembled structure has good assemdirect
 creditsfromcompliance = zeros(size(assemorder));
+assemdirectscell = cell(size(assemorder));
 iscompliantlist = ones(norder, nobjects);
 % find the assemdirect and compliance for the first object
 figure;
@@ -208,6 +211,7 @@ for i = 1:norder
     [compliance, assemdirect] = ...
         findassemdirectpcd([], [], interstate, otlpcd, otlpcdnormals);
     creditsfromcompliance(i, 1) = compliance;
+    assemdirectscell{i,1} = assemdirect;
     iscompliantlist(i, 1) = compliance > 0;
     assemdirectforplot = assemdirect*0.15;
     plotinterstates(interstate, 'none', intercolors(objid,:), 'k');
@@ -278,6 +282,7 @@ for iassemobj = 2:nobjects
             checkpcdfeasibility = checkpcd - checkpcdnormals*shrinklength;
             
             creditsfromcompliance(i, iassemobj) = compliance;
+            assemdirectscell{i, iassemobj} = assemdirect;
             iscompliantlist(i, iassemobj) = compliance > 0;
             assemdirectforplot = assemdirect*0.15;
             
@@ -303,7 +308,10 @@ for iassemobj = 2:nobjects
             end
             text(0,0,0.35, ['Assemcompliance ', num2str(creditsfromcompliance(i, iassemobj))]);
             drawnow;
+        else
+            assemdirectscell{i, iassemobj} = [0,0,0];
         end
     end
 end
-%}
+save data/assemthreeblocks/creditsfromcompliance.mat creditsfromcompliance;
+save data/assemthreeblocks/assemdirectscell.mat assemdirectscell;

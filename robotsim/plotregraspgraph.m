@@ -22,7 +22,7 @@ function plotregraspgraph(dg, regraspgraph, varargin)
         figure;
         graspnodehinterval = 0.05;
         nstates = height(dg.Nodes);
-        circleangles = linspace(0,2*pi, nstates-2)';
+        circleangles = linspace(0,2*pi, nstates-1)';
         statepos = [[3;-3;cos(circleangles)], [0;0;sin(circleangles)]];
 %         for i = 1:size(statepos,1)
 %             if i == 1

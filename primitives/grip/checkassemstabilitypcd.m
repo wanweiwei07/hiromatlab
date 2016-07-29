@@ -88,8 +88,8 @@ function [isstable, quality, supportpolygon] = checkassemstabilitypcd(basepcd, .
         supportpolygon = [x(k), y(k)];
         supportpolygonhgt = z(k);
         [pos, comdist] = projPointOnPolygon(obj2com, supportpolygon);
-        heightstart = supportpolygonhgt(floor(pos))+1;
-        heightgoal = supportpolygonhgt(ceil(pos));
+        heightstart = supportpolygonhgt(floor(pos)+1);
+        heightgoal = supportpolygonhgt(ceil(pos)+1);
         ratio = ceil(pos)-pos;
         comhgt = heightstart*ratio+heightgoal*(1-ratio);
             % see if pos is a vert

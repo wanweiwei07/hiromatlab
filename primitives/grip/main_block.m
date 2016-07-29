@@ -1,18 +1,18 @@
 % dbstop if error
 
-%% compute interair lpart
-interairl = computeinterstateair('objects/lpart.obj', 'hxgripper/hxpalm.obj', ...
-    'hxgripper/hxfgr1.obj', 'hxgripper/hxfgr2.obj');
-save data/interairl.mat interairl;
-%% compute placements lpart
-dbstop if error
-placementsl = associnterstateps(interairl);
-figure;
-plotinterstates(placementsl);
-save data/placementsl.mat placementsl;
+% %% compute interair lpart
+% interairl = computeinterstateair('objects/lpart.obj', 'hxgripper/hxpalm.obj', ...
+%     'hxgripper/hxfgr1.obj', 'hxgripper/hxfgr2.obj');
+% save data/interairl.mat interairl;
+% %% compute placements lpart
+% dbstop if error
+% placementsl = associnterstateps(interairl);
+% figure;
+% plotinterstates(placementsl);
+% save data/placementsl.mat placementsl;
 
-%% compute interair 
-tripartinterairtri = computeinterstateair('objects/tripart.obj', 'hxgripper/hxpalm.obj', ...
+%% compute interair tripart
+interairtri = computeinterstateair('objects/tripart.obj', 'hxgripper/hxpalm.obj', ...
     'hxgripper/hxfgr1.obj', 'hxgripper/hxfgr2.obj');
 save data/interairtri.mat interairtri;
 %% compute placements tripart
