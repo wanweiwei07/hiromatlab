@@ -1,5 +1,6 @@
 %% delete all the imaqobjects
 delete(imaqfind)
+
 % create devices
 colorDevice = imaq.VideoDevice('kinect',1);
 depthDevice = imaq.VideoDevice('kinect',2);

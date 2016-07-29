@@ -1,6 +1,7 @@
 %% delete all the imaqobjects
 % Detected by 3 pointclouds of center, left and right kinect
 
+
 %% transform
 load data/placementsl.mat
 load data/PointsListCalibrated_r.mat

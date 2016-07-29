@@ -1,6 +1,7 @@
 %% delete all the imaqobjects
 delete(imaqfind)
 
+
 %% Right Kinect
 % create devices
 colorDevice = imaq.VideoDevice('kinect',1);
