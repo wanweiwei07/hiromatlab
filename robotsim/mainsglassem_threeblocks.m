@@ -61,34 +61,29 @@ load data/assemthreeblocks/obj1state_assem_ikupdown.mat;
 load data/assemthreeblocks/intermediatestates1_ikprggrp.mat;
 load data/assemthreeblocks/intermediatestates1_ikupdown.mat;
 
-% load obj z3d
+% load obj tri
 load data/assemthreeblocks/obj2state_init.mat;
 load data/assemthreeblocks/obj2state_inits_ikprggrp.mat;
 load data/assemthreeblocks/obj2state_inits_ikupdown.mat;
-% load assem obj z3d
+% load assem obj tri
 load data/assemthreeblocks/obj2state_assem.mat;
 load data/assemthreeblocks/obj2state_assem_ikprggrp.mat;
 load data/assemthreeblocks/obj2state_assem_ikupdown.mat;
-% load placements z3d
+% load placements tri
 load data/assemthreeblocks/intermediatestates2_ikprggrp.mat;
 load data/assemthreeblocks/intermediatestates2_ikupdown.mat;
 
-% load obj tri
+% load obj z3d
 load data/assemthreeblocks/obj3state_init.mat;
 load data/assemthreeblocks/obj3state_inits_ikprggrp.mat;
 load data/assemthreeblocks/obj3state_inits_ikupdown.mat;
-% load assem obj tri
+% load assem obj z3d
 load data/assemthreeblocks/obj3state_assem.mat;
 load data/assemthreeblocks/obj3state_assem_ikprggrp.mat;
 load data/assemthreeblocks/obj3state_assem_ikupdown.mat;
-% load placements tri
+% load placements z3d
 load data/assemthreeblocks/intermediatestates3_ikprggrp.mat;
 load data/assemthreeblocks/intermediatestates3_ikupdown.mat;
-
-% load assembly direction
-load data/assemthreeblocks/obj1state_assem_direct.mat;
-load data/assemthreeblocks/obj2state_assem_direct.mat;
-load data/assemthreeblocks/obj3state_assem_direct.mat;
 
 % first object
 % combine the states
@@ -131,86 +126,84 @@ for i = 1:nkeyposes
     end
 end
 
-% % second object
-% % combine the states
-% initstate.ikprggrp = obj2state_inits_ikprggrp;
-% initstate.ikupdown = obj2state_inits_ikupdown;
-% goalstate.ikprggrp = obj2state_assem_ikprggrp;
-% goalstate.ikupdown = obj2state_assem_ikupdown;
-% interstates = cell(nintermediatestates,1);
-% for i = 1:nintermediatestates
-%     interstates{i}.ikprggrp = intermediatestates_ikprggrp{i};
-%     interstates{i}.ikupdown = intermediatestates_ikupdown{i};
-% end
-% graphstates = [{initstate};{goalstate};interstates];
-% graphstates = filterunavailablestates(graphstates);
-% 
-% % search path for second obj
-% [isdone, keyposes] = searchrgtkeyposespp(hironx, graphstates);
-% if isdone == 0
-%     disp('No path found');
-% end
-% 
-% cmap = colormap(jet);
-% nkeyposes = size(keyposes, 1);
-% for i = 1:nkeyposes
-%     graspid = i;
-%     plotkeypose(hironx, keyposes{i}, cmap(mod(i, 63),:));
-% %     plotactiveobj(obj1state_assem, [0.3,0.5,0.3]);
-% %     plotactiveobj(obj3state_init, [0.3,0.5,0.3]);
-% %     plotactiveobj(obj4state_init, [0.3,0.5,0.3]);
-% %     plotactiveobj(obj5state_init, [0.3,0.5,0.3]);
-%     drawnow;
-%     saveas(fhdl, ['results/rearrangement/obj_2_', num2str(i), '.png']);
-%     cla;
-% %     if mod(i,2)==0 && strcmp(keyposes{i}.graspparams(1).handstate, 'closemp') && i ~= nkeyposes
-% %         plotkeyposes(hironx, keyposes{i}, keyposes{i+1});
-% %         drawnow;
-% %     end
-%     if strcmp(keyposes{i}.graspparams(1).handstate, 'closemp')
-%         cla;
-%     end
-% end
+% second object
+% combine the states
+initstate.ikprggrp = obj2state_inits_ikprggrp;
+initstate.ikupdown = obj2state_inits_ikupdown;
+goalstate.ikprggrp = obj2state_assem_ikprggrp;
+goalstate.ikupdown = obj2state_assem_ikupdown;
+nintermediatestates2 = size(intermediatestates2_ikprggrp, 1);
+interstates = cell(nintermediatestates2,1);
+for i = 1:nintermediatestates2
+    interstates{i}.ikprggrp = intermediatestates2_ikprggrp{i};
+    interstates{i}.ikupdown = intermediatestates2_ikupdown{i};
+end
+graphstates = [{initstate};{goalstate};interstates];
+graphstates = filterunavailablestates(graphstates);
 
-% % third object
-% % combine the states
-% initstate.ikprggrp = obj3state_inits_ikprggrp;
-% initstate.ikupdown = obj3state_inits_ikupdown;
-% goalstate.ikprggrp = obj3state_assem_ikprggrp;
-% goalstate.ikupdown = obj3state_assem_ikupdown;
-% interstates = cell(nintermediatestates,1);
-% for i = 1:nintermediatestates
-%     interstates{i}.ikprggrp = intermediatestates_ikprggrp{i};
-%     interstates{i}.ikupdown = intermediatestates_ikupdown{i};
-% end
-% graphstates = [{initstate};{goalstate};interstates];
-% graphstates = filterunavailablestates(graphstates);
-% 
-% % search path for third obj
-% [isdone, keyposes] = searchrgtkeyposespp(hironx, graphstates);
-% if isdone == 0
-%     disp('No path found');
-% end
-% 
-% 
-% %%
-% cmap = colormap(jet);
-% nkeyposes = size(keyposes, 1);
-% for i = 1:nkeyposes
-%     graspid = i;
-%     plotkeypose(hironx, keyposes{i}, cmap(mod(i, 63),:));
-% %     plotactiveobj(obj1state_assem, [0.3,0.5,0.3]);
-% %     plotactiveobj(obj2state_assem, [0.3,0.5,0.3]);
-% %     plotactiveobj(obj4state_init, [0.3,0.5,0.3]);
-% %     plotactiveobj(obj5state_init, [0.3,0.5,0.3]);
-% %     drawnow;
-%     saveas(fhdl, ['results/rearrangement/obj_3_', num2str(i), '.png']);
-%     cla;
-% %     if mod(i,2)==0 && strcmp(keyposes{i}.graspparams(1).handstate, 'closemp') && i ~= nkeyposes
-% %         plotkeyposes(hironx, keyposes{i}, keyposes{i+1});
-% %         drawnow;
-% %     end
-%     if strcmp(keyposes{i}.graspparams(1).handstate, 'closemp')
-%         cla;
+% search path for second obj
+[isdone, keyposes] = searchrgtkeyposespp(hironx, graphstates);
+if isdone == 0
+    disp('No path found');
+end
+
+cmap = colormap(jet);
+nkeyposes = size(keyposes, 1);
+for i = 1:nkeyposes
+    graspid = i;
+    plotkeypose(hironx, keyposes{i}, cmap(mod(i, 63),:));
+    plotactiveobj(obj1state_assem, [0.3,0.5,0.3]);
+    plotactiveobj(obj3state_init, [0.3,0.5,0.3]);
+    drawnow;
+    saveas(fhdl, ['results/rearrangement/obj_2_', num2str(i), '.png']);
+    cla;
+%     if mod(i,2)==0 && strcmp(keyposes{i}.graspparams(1).handstate, 'closemp') && i ~= nkeyposes
+%         plotkeyposes(hironx, keyposes{i}, keyposes{i+1});
+%         drawnow;
 %     end
-% end
+    if strcmp(keyposes{i}.graspparams(1).handstate, 'closemp')
+        cla;
+    end
+end
+
+% third object
+% combine the states
+initstate.ikprggrp = obj3state_inits_ikprggrp;
+initstate.ikupdown = obj3state_inits_ikupdown;
+goalstate.ikprggrp = obj3state_assem_ikprggrp;
+goalstate.ikupdown = obj3state_assem_ikupdown;
+nintermediatestates3 = size(intermediatestates3_ikprggrp, 1);
+interstates = cell(nintermediatestates3,1);
+for i = 1:nintermediatestates3
+    interstates{i}.ikprggrp = intermediatestates3_ikprggrp{i};
+    interstates{i}.ikupdown = intermediatestates3_ikupdown{i};
+end
+graphstates = [{initstate};{goalstate};interstates];
+graphstates = filterunavailablestates(graphstates);
+
+% search path for third obj
+[isdone, keyposes] = searchrgtkeyposespp(hironx, graphstates);
+if isdone == 0
+    disp('No path found');
+end
+
+
+%%
+cmap = colormap(jet);
+nkeyposes = size(keyposes, 1);
+for i = 1:nkeyposes
+    graspid = i;
+    plotkeypose(hironx, keyposes{i}, cmap(mod(i, 63),:));
+    plotactiveobj(obj1state_assem, [0.3,0.5,0.3]);
+    plotactiveobj(obj2state_assem, [0.3,0.5,0.3]);
+%     drawnow;
+    saveas(fhdl, ['results/rearrangement/obj_3_', num2str(i), '.png']);
+    cla;
+%     if mod(i,2)==0 && strcmp(keyposes{i}.graspparams(1).handstate, 'closemp') && i ~= nkeyposes
+%         plotkeyposes(hironx, keyposes{i}, keyposes{i+1});
+%         drawnow;
+%     end
+    if strcmp(keyposes{i}.graspparams(1).handstate, 'closemp')
+        cla;
+    end
+end

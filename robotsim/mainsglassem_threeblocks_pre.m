@@ -32,9 +32,9 @@ save data/assemthreeblocks/obj1state_init.mat obj1state_init;
 save data/assemthreeblocks/obj1state_inits_ikprggrp.mat obj1state_inits_ikprggrp;
 save data/assemthreeblocks/obj1state_inits_ikupdown.mat obj1state_inits_ikupdown;
 
-% original object tri
+%% original object tri
 cprintf('r', 'second object\n');
-obj2placement = 1;
+obj2placement = 2;
 obj2p = [0.3;-0.2;-0.05];
 obj2R = eye(3,3);
 obj2state = placementstri{obj2placement};
@@ -47,10 +47,10 @@ save data/assemthreeblocks/obj2state_init.mat obj2state_init;
 save data/assemthreeblocks/obj2state_inits_ikprggrp.mat obj2state_inits_ikprggrp;
 save data/assemthreeblocks/obj2state_inits_ikupdown.mat obj2state_inits_ikupdown;
 
-% original object z3d
+%% original object z3d
 cprintf('r', 'third object\n');
 obj3placement = 5;
-obj3p = [0.45;-0.25;-0.05];
+obj3p = [0.45;-0.35;-0.05];
 obj3R = eye(3,3);
 obj3state = placementsz3d{obj3placement};
 obj3state_init = moveinterstate(obj3state, obj3p, obj3R);
@@ -62,7 +62,7 @@ save data/assemthreeblocks/obj3state_init.mat obj3state_init;
 save data/assemthreeblocks/obj3state_inits_ikprggrp.mat obj3state_inits_ikprggrp;
 save data/assemthreeblocks/obj3state_inits_ikupdown.mat obj3state_inits_ikupdown;
 
-% assembled object t
+%% assembled object t
 cprintf('r', 'first object in assembly\n');
 obj1state_assem_direct = assemdirectscell{5,1};
 obj1state = assemsgl_statescell{5,1};
