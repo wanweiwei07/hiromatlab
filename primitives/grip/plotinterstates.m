@@ -66,7 +66,7 @@ function plotinterstates(interstates, varargin)
         plotfacealpha = 1;
         for j = 1:nfaces
             if isempty(thisinter.graspparams)
-                plotobjcolor = [0.7, 0.7, 0.7];
+                plotobjcolor = [0.5, 0.5, 0.5];
             end
             if nargin >= 3
                 plotobjcolor = varargin{2};

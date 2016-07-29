@@ -15,7 +15,10 @@ function isdone = playpose(hirosock, handrqcon, keypose, varargin)
 % author: Weiwei
 % date: 20160721
 
-    if nargin
+    motiontime = 4.0;
+    if nargin == 4
+        motiontime = 3.0;
+    end
 
     %% set hand
     if strcmp(keypose.graspparams(1).handstate, 'open')
@@ -26,7 +29,7 @@ function isdone = playpose(hirosock, handrqcon, keypose, varargin)
     end
 
     %% move rightarmjoints7
-    rjntspd = [keypose.graspparams(1).bodyyaw, keypose.graspparams(1).rgtjnts, 4.0];
+    rjntspd = [keypose.graspparams(1).bodyyaw, keypose.graspparams(1).rgtjnts, motiontime];
     isdone = movergtjnts7(hirosock, rjntspd);
 
     
